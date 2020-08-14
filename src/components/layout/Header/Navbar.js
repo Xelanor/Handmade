@@ -1,4 +1,5 @@
 import React from "react";
+import { useStateValue } from "../../../state/StateProvider";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import SearchIcon from "@material-ui/icons/Search";
@@ -74,6 +75,8 @@ const HeaderNavText = styled.span`
 `;
 
 const Navbar = (props) => {
+  const [{ basket }] = useStateValue();
+
   return (
     <HeaderBlock>
       <Link to="/">
@@ -101,7 +104,7 @@ const Navbar = (props) => {
         <HeaderIconContainer>
           <ShoppingBasketIcon style={{ fontSize: 30 }} />
         </HeaderIconContainer>
-        <HeaderNavText>0</HeaderNavText>
+        <HeaderNavText>{basket.length}</HeaderNavText>
       </HeaderNavBlock>
     </HeaderBlock>
   );

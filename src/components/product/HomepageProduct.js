@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import StarRate from "@material-ui/icons/StarRate";
 
@@ -44,13 +45,13 @@ const ProductSeller = styled.div`
   font-size: 12px;
 `;
 const ProductOriginalPrice = styled.div`
-  color: ##4f4f4f;
+  color: #4f4f4f;
   text-decoration: line-through;
   text-decoration-color: #ed1250;
   margin-right: 8px;
 `;
 const ProductDiscountPrice = styled.div`
-  color: ##4f4f4f;
+  color: #4f4f4f;
 `;
 
 const ProductRate = styled.div`
@@ -61,37 +62,39 @@ const ProductRate = styled.div`
 const HomepageProduct = () => {
   return (
     <ProductContainer>
-      <Product>
-        <ProductImage
-          src="https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
-          alt=""
-        />
-        <ProductDesc>
-          <ProductTitle>Özel Boyalı Cam şişe</ProductTitle>
-          <ProductSeller>Satıcı: Esra Yıldız</ProductSeller>
-          <div style={{ display: "flex" }}>
-            <ProductOriginalPrice>139.99TL</ProductOriginalPrice>
-            <ProductDiscountPrice>109.99TL</ProductDiscountPrice>
-          </div>
-          <div style={{ display: "flex" }}>
-            <ProductRate>
-              <StarRate />
-            </ProductRate>
-            <ProductRate>
-              <StarRate />
-            </ProductRate>
-            <ProductRate>
-              <StarRate />
-            </ProductRate>
-            <ProductRate>
-              <StarRate />
-            </ProductRate>
-            <ProductRate>
-              <StarRate />
-            </ProductRate>
-          </div>
-        </ProductDesc>
-      </Product>
+      <Link to="/urun/berke">
+        <Product>
+          <ProductImage
+            src="https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
+            alt=""
+          />
+          <ProductDesc>
+            <ProductTitle>Özel Boyalı Cam şişe</ProductTitle>
+            <ProductSeller>Satıcı: Esra Yıldız</ProductSeller>
+            <div style={{ display: "flex" }}>
+              <ProductOriginalPrice>139.99TL</ProductOriginalPrice>
+              <ProductDiscountPrice>109.99TL</ProductDiscountPrice>
+            </div>
+            <div style={{ display: "flex" }}>
+              <ProductRate>
+                <StarRate />
+              </ProductRate>
+              <ProductRate>
+                <StarRate />
+              </ProductRate>
+              <ProductRate>
+                <StarRate />
+              </ProductRate>
+              <ProductRate>
+                <StarRate />
+              </ProductRate>
+              <ProductRate>
+                <StarRate />
+              </ProductRate>
+            </div>
+          </ProductDesc>
+        </Product>
+      </Link>
     </ProductContainer>
   );
 };
