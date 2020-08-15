@@ -10,8 +10,6 @@
 /coverage
 
 # production
-/build
-/backend/build
 .env
 
 # misc

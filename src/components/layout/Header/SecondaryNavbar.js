@@ -9,10 +9,24 @@ const HeaderBlock = styled.div`
   padding: 10px 0 5px 0;
   justify-content: space-around;
   border-bottom: 3px solid #ed1250;
+  -ms-overflow-style: none;
+
+  @media (max-width: 768px) {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const HeaderLink = styled.span`
   color: #fff6da;
+  flex: 0 0 auto;
+  padding-right: 10px;
+  padding-left: 10px;
 `;
 
 const SecondaryNavbar = (props) => {

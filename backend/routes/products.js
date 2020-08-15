@@ -18,4 +18,11 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
+// Get a spesific product
+router.route("/:slug").get((req, res) => {
+  Product.findOne({ slug: req.params.slug })
+    .then((product) => res.json(product))
+    .catch((err) => res.status(400).json("Error: " + err));
+});
+
 module.exports = router;

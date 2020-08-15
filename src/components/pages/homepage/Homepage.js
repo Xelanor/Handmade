@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 import HomepageProduct from "../../product/HomepageProduct";
 import HomepageFirstLine from "./HomepageFirstLine";
@@ -31,21 +32,32 @@ const HeaderText = styled.div`
 `;
 
 const Homepage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/products")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <HomepageContainer>
       <HomepageFirstLine />
       <SecondLine>
         <HeaderText>İndirimli Ürünler</HeaderText>
         <ProductLine>
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
-          <HomepageProduct />
+          {products ? (
+            products.map((product) => {
+              return <HomepageProduct product={product} />;
+            })
+          ) : (
+            <div>Yok</div>
+          )}
         </ProductLine>
       </SecondLine>
     </HomepageContainer>

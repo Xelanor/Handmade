@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useStateValue } from "../../state/StateProvider";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -38,11 +39,9 @@ const ProductImageSection = styled.div`
 `;
 
 const ProductBigImage = styled.img`
-  height: 600px;
   width: 100%;
   object-fit: cover;
   @media (max-width: 768px) {
-    height: 400px;
   }
 `;
 
@@ -85,6 +84,11 @@ const ProductDetailSection = styled.div`
 const ProductTitle = styled.div`
   font-size: 24px;
   font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const ProductSellerText = styled.div``;
@@ -152,15 +156,22 @@ const ProductPropertiesText = styled.div``;
 
 const ProductDetail = () => {
   const [, dispatch] = useStateValue();
+  const [product, setProduct] = useState();
   const [activeImage, setActiveImage] = useState("");
 
-  useEffect(() => {
-    setActiveImage(
-      "https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
-    );
-  }, []);
-
   let { slug } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`/api/products/${slug}`)
+      .then((res) => {
+        setProduct(res.data);
+        setActiveImage(res.data.images[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const addToBasket = () => {
     dispatch({
@@ -174,104 +185,71 @@ const ProductDetail = () => {
 
   return (
     <ProductWrapper>
-      <ProductColumn>
-        <ProductSection>
-          <ProductImageSection>
-            <ProductBigImage src={activeImage} />
-            <ProductThumbImageSection>
-              <ProductThumbImage
-                active={
-                  activeImage ===
-                  "https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
-                }
-                onClick={(e) => setActiveImage(e.target.src)}
-                src="https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
-              />
-              <ProductThumbImage
-                active={
-                  activeImage ===
-                  "https://productimages.hepsiburada.net/l/37/600-800/10566778880050.jpg"
-                }
-                onClick={(e) => setActiveImage(e.target.src)}
-                src="https://productimages.hepsiburada.net/l/37/600-800/10566778880050.jpg"
-              />
-              <ProductThumbImage
-                active={
-                  activeImage ===
-                  "https://productimages.hepsiburada.net/l/37/500/10566778945586.jpg"
-                }
-                onClick={(e) => setActiveImage(e.target.src)}
-                src="https://productimages.hepsiburada.net/l/37/500/10566778945586.jpg"
-              />
-              <ProductThumbImage
-                active={
-                  activeImage ===
-                  "https://productimages.hepsiburada.net/l/37/500/10566778978354.jpg"
-                }
-                onClick={(e) => setActiveImage(e.target.src)}
-                src="https://productimages.hepsiburada.net/l/37/500/10566778978354.jpg"
-              />
-            </ProductThumbImageSection>
-          </ProductImageSection>
-          <ProductDetailWrapper>
-            <ProductDetailSection>
-              <ProductTitle>El yapımı Cüzdan</ProductTitle>
-              <ProductSellerText>Satıcı: Esra Yıldız</ProductSellerText>
-              <div style={{ display: "flex" }}>
-                <ProductRate>
-                  <StarRate />
-                </ProductRate>
-                <ProductRate>
-                  <StarRate />
-                </ProductRate>
-                <ProductRate>
-                  <StarRate />
-                </ProductRate>
-                <ProductRate>
-                  <StarRate />
-                </ProductRate>
-                <ProductRate>
-                  <StarRate />
-                </ProductRate>
-              </div>
-              <ProductDescription>
-                Tamamiyle dana derisinden yapılmıştır. Genişliği 9 cm olup
-                tamamen el işlemesiyle yapılmıştır.
-              </ProductDescription>
-              <div style={{ display: "flex" }}>
-                <ProductOriginalPrice>139.99TL</ProductOriginalPrice>
-                <ProductDiscountPrice>109.99TL</ProductDiscountPrice>
-              </div>
-              <CartButton onClick={addToBasket}>Sepete Ekle</CartButton>
-              <ProductPropertiesWrapper>
-                <ProductPropertiesSectionFirst>
-                  <ProductPropertiesTitle>
-                    Ürün Özellikleri
-                  </ProductPropertiesTitle>
-                  <ProductPropertiesText>
-                    Hammaddesi: Dana Derisi
-                  </ProductPropertiesText>
-                  <ProductPropertiesText>Genişlik: 8 cm</ProductPropertiesText>
-                  <ProductPropertiesText>Uzukluk: 17 cm</ProductPropertiesText>
-                  <ProductPropertiesText>
-                    Renk: Kahverengi
-                  </ProductPropertiesText>
-                </ProductPropertiesSectionFirst>
-                <ProductPropertiesSectionSecond>
-                  <ProductPropertiesTitle>
-                    Ürün Açıklaması
-                  </ProductPropertiesTitle>
-                  <ProductPropertiesText>
-                    Erkeklere özel günlerde alınabilecek olan güzel bir hediye.
-                    Genelde resmi giyinmeyi tercih edenlerin tercih ettiği bir
-                    model.
-                  </ProductPropertiesText>
-                </ProductPropertiesSectionSecond>
-              </ProductPropertiesWrapper>
-            </ProductDetailSection>
-          </ProductDetailWrapper>
-        </ProductSection>
-      </ProductColumn>
+      {product ? (
+        <ProductColumn>
+          <ProductSection>
+            <ProductImageSection>
+              <ProductBigImage src={activeImage} />
+              <ProductThumbImageSection>
+                {product.images.map((image) => (
+                  <ProductThumbImage
+                    active={activeImage === image}
+                    onClick={(_) => setActiveImage(image)}
+                    src={image}
+                  />
+                ))}
+              </ProductThumbImageSection>
+            </ProductImageSection>
+            <ProductDetailWrapper>
+              <ProductDetailSection>
+                <ProductTitle>{product.name}</ProductTitle>
+                <ProductSellerText>Satıcı: Esra Yıldız</ProductSellerText>
+                <div style={{ display: "flex" }}>
+                  {Array(product.rating)
+                    .fill()
+                    .map((_) => (
+                      <ProductRate>
+                        <StarRate />
+                      </ProductRate>
+                    ))}
+                </div>
+                <ProductDescription>{product.description}</ProductDescription>
+                <div style={{ display: "flex" }}>
+                  <ProductOriginalPrice>
+                    {product.originalPrice}TL
+                  </ProductOriginalPrice>
+                  <ProductDiscountPrice>
+                    {product.discountPrice}TL
+                  </ProductDiscountPrice>
+                </div>
+                <CartButton onClick={addToBasket}>Sepete Ekle</CartButton>
+                <ProductPropertiesWrapper>
+                  <ProductPropertiesSectionFirst>
+                    <ProductPropertiesTitle>
+                      Ürün Özellikleri
+                    </ProductPropertiesTitle>
+                    {Object.keys(product.features).map((key) => (
+                      <ProductPropertiesText>
+                        {key}: {product.features[key]}
+                      </ProductPropertiesText>
+                    ))}
+                  </ProductPropertiesSectionFirst>
+                  <ProductPropertiesSectionSecond>
+                    <ProductPropertiesTitle>
+                      Ürün Açıklaması
+                    </ProductPropertiesTitle>
+                    <ProductPropertiesText>
+                      {product.comment}
+                    </ProductPropertiesText>
+                  </ProductPropertiesSectionSecond>
+                </ProductPropertiesWrapper>
+              </ProductDetailSection>
+            </ProductDetailWrapper>
+          </ProductSection>
+        </ProductColumn>
+      ) : (
+        <div></div>
+      )}
     </ProductWrapper>
   );
 };

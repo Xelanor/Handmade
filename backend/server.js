@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const morgan = require("morgan");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -52,6 +53,14 @@ const productsRouter = require("./routes/products");
 
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
+
+// ADD THIS LINE
+app.use(express.static("build"));
+
+// If no API routes are hit, send the React app
+app.use(function (req, res) {
+  res.sendFile(path.join(__dirname, "build/index.html"));
+});
 
 server.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

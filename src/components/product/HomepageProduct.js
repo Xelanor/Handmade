@@ -39,6 +39,11 @@ const ProductDesc = styled.div`
 const ProductTitle = styled.div`
   color: #042f4b;
   font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const ProductSeller = styled.div`
   color: #fbc99d;
@@ -48,7 +53,7 @@ const ProductOriginalPrice = styled.div`
   color: #4f4f4f;
   text-decoration: line-through;
   text-decoration-color: #ed1250;
-  margin-right: 8px;
+  margin-right: 16px;
 `;
 const ProductDiscountPrice = styled.div`
   color: #4f4f4f;
@@ -56,41 +61,34 @@ const ProductDiscountPrice = styled.div`
 
 const ProductRate = styled.div`
   color: #ed1250;
-  margin-right: -5px;
+  margin-left: -5px;
 `;
 
-const HomepageProduct = () => {
+const HomepageProduct = ({ product }) => {
   return (
     <ProductContainer>
-      <Link to="/urun/berke">
+      <Link to={`/urun/${product.slug}`}>
         <Product>
-          <ProductImage
-            src="https://cdn.shopify.com/s/files/1/1680/3505/products/tobaccoweb2_dfec8d69-efcb-4957-b681-f8c673189fb9_grande.jpg?v=1583234172"
-            alt=""
-          />
+          <ProductImage src={product.images[0]} alt="" />
           <ProductDesc>
-            <ProductTitle>Özel Boyalı Cam şişe</ProductTitle>
+            <ProductTitle>{product.name}</ProductTitle>
             <ProductSeller>Satıcı: Esra Yıldız</ProductSeller>
             <div style={{ display: "flex" }}>
-              <ProductOriginalPrice>139.99TL</ProductOriginalPrice>
-              <ProductDiscountPrice>109.99TL</ProductDiscountPrice>
+              <ProductOriginalPrice>
+                {product.originalPrice}TL
+              </ProductOriginalPrice>
+              <ProductDiscountPrice>
+                {product.discountPrice}TL
+              </ProductDiscountPrice>
             </div>
             <div style={{ display: "flex" }}>
-              <ProductRate>
-                <StarRate />
-              </ProductRate>
-              <ProductRate>
-                <StarRate />
-              </ProductRate>
-              <ProductRate>
-                <StarRate />
-              </ProductRate>
-              <ProductRate>
-                <StarRate />
-              </ProductRate>
-              <ProductRate>
-                <StarRate />
-              </ProductRate>
+              {Array(product.rating)
+                .fill()
+                .map((_) => (
+                  <ProductRate>
+                    <StarRate />
+                  </ProductRate>
+                ))}
             </div>
           </ProductDesc>
         </Product>
