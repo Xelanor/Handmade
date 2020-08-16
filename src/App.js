@@ -29,6 +29,16 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (localStorage.cart) {
+      const cart = JSON.parse(localStorage.cart);
+      dispatch({
+        type: "SET_BASKET",
+        basket: cart,
+      });
+    }
+  }, []);
+
   return (
     <Router>
       <Header />

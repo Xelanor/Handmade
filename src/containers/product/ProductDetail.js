@@ -177,8 +177,7 @@ const ProductDetail = () => {
     dispatch({
       type: "ADD_TO_BASKET",
       item: {
-        id: 123,
-        title: 123123,
+        id: product._id,
       },
     });
   };

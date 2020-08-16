@@ -11,11 +11,20 @@ import CloseIcon from "@material-ui/icons/Close";
 
 import Logo from "../../../assets/logo.png";
 
-const HeaderBlock = styled.div`
+const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
   background-color: #042f4b;
+`;
+
+const HeaderBlock = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin-right: auto;
+  margin-left: auto;
 `;
 
 const LogoBlock = styled.img`
@@ -162,51 +171,53 @@ const Navbar = (props) => {
 
   return (
     <>
-      <HeaderBlock>
-        <StyledLink to="/">
-          <LogoBlock src={Logo} alt="" />
-        </StyledLink>
-        <HeaderSearchBox>
-          <HeaderSearchInput type="text" placeholder="Ürün Ara" />
-          <SearchIconContainer>
-            <SearchIcon />
-          </SearchIconContainer>
-        </HeaderSearchBox>
-        <HeaderNavContainer>
-          <HeaderNavBlock>
-            <HeaderIconContainer>
-              <AttachMoney style={{ fontSize: 32 }} />
-            </HeaderIconContainer>
-            <HeaderNavText>Satış Yap</HeaderNavText>
-          </HeaderNavBlock>
-          <StyledLink to="/login">
+      <HeaderContainer>
+        <HeaderBlock>
+          <StyledLink to="/">
+            <LogoBlock src={Logo} alt="" />
+          </StyledLink>
+          <HeaderSearchBox>
+            <HeaderSearchInput type="text" placeholder="Ürün Ara" />
+            <SearchIconContainer>
+              <SearchIcon />
+            </SearchIconContainer>
+          </HeaderSearchBox>
+          <HeaderNavContainer>
             <HeaderNavBlock>
               <HeaderIconContainer>
-                <AccountCircle style={{ fontSize: 32 }} />
+                <AttachMoney style={{ fontSize: 32 }} />
               </HeaderIconContainer>
-              <HeaderNavText>Giriş Yap</HeaderNavText>
+              <HeaderNavText>Satış Yap</HeaderNavText>
             </HeaderNavBlock>
-          </StyledLink>
-          <HeaderNavBlock>
-            <HeaderIconContainer>
-              <ShoppingBasketIcon style={{ fontSize: 30 }} />
-            </HeaderIconContainer>
-            <HeaderNavText>{basket.length}</HeaderNavText>
-          </HeaderNavBlock>
-        </HeaderNavContainer>
-        <HeaderMobileNavContainer>
-          <>
-            <StyledMenuIcon
-              onClick={() => setMobileMenu(true)}
-              display={mobileMenu}
-            />
-            <StyledCloseIcon
-              onClick={() => setMobileMenu(false)}
-              display={mobileMenu}
-            />
-          </>
-        </HeaderMobileNavContainer>
-      </HeaderBlock>
+            <StyledLink to="/login">
+              <HeaderNavBlock>
+                <HeaderIconContainer>
+                  <AccountCircle style={{ fontSize: 32 }} />
+                </HeaderIconContainer>
+                <HeaderNavText>Giriş Yap</HeaderNavText>
+              </HeaderNavBlock>
+            </StyledLink>
+            <HeaderNavBlock>
+              <HeaderIconContainer>
+                <ShoppingBasketIcon style={{ fontSize: 30 }} />
+              </HeaderIconContainer>
+              <HeaderNavText>{basket.length}</HeaderNavText>
+            </HeaderNavBlock>
+          </HeaderNavContainer>
+          <HeaderMobileNavContainer>
+            <>
+              <StyledMenuIcon
+                onClick={() => setMobileMenu(true)}
+                display={mobileMenu}
+              />
+              <StyledCloseIcon
+                onClick={() => setMobileMenu(false)}
+                display={mobileMenu}
+              />
+            </>
+          </HeaderMobileNavContainer>
+        </HeaderBlock>
+      </HeaderContainer>
       <MobileNavbarContainer display={mobileMenu}>
         <StyledLink to="/login">
           <MobileHeaderNavBlock>
