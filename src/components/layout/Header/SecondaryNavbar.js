@@ -5,8 +5,8 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: #042f4b;
-  border-bottom: 3px solid #ed1250;
+  background-color: ${(props) => props.theme.colors.primary};
+  border-bottom: 3px solid ${(props) => props.theme.colors.action};
 `;
 
 const HeaderBlock = styled.div`
@@ -32,7 +32,7 @@ const HeaderBlock = styled.div`
 `;
 
 const HeaderLink = styled.span`
-  color: #fff6da;
+  color: ${(props) => props.theme.colors.secondary};
   flex: 0 0 auto;
   padding-right: 10px;
   padding-left: 10px;

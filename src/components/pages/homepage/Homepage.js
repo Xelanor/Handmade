@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import Loader from "react-loader-spinner";
 
 import HomepageProduct from "../../product/HomepageProduct";
 import HomepageFirstLine from "./HomepageFirstLine";
@@ -31,8 +32,14 @@ const HeaderText = styled.div`
   margin-left: 10px;
 `;
 
+const LoaderContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+`;
+
 const Homepage = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
 
   useEffect(() => {
     axios
@@ -56,7 +63,14 @@ const Homepage = () => {
               return <HomepageProduct product={product} />;
             })
           ) : (
-            <div>Yok</div>
+            <LoaderContainer>
+              <Loader
+                type="ThreeDots"
+                color="#042f4b"
+                height="100"
+                width="100"
+              />
+            </LoaderContainer>
           )}
         </ProductLine>
       </SecondLine>

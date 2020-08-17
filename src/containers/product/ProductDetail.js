@@ -4,6 +4,7 @@ import { useStateValue } from "../../state/StateProvider";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import StarRate from "@material-ui/icons/StarRate";
+import Loader from "react-loader-spinner";
 
 const ProductWrapper = styled.section`
   display: flex;
@@ -61,14 +62,16 @@ const ProductThumbImage = styled.img`
   border: 2px solid #fff;
   cursor: pointer;
   user-select: none;
-  ${({ active }) => active && `border: 2px solid #ED1250`};
+  ${(props) =>
+    props.active && `border: 2px solid ${props.theme.colors.action}`};
 `;
 
 const ProductDetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
-  color: #042f4b;
+  color: ${(props) => props.theme.colors.primary};
+
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -94,7 +97,7 @@ const ProductTitle = styled.div`
 const ProductSellerText = styled.div``;
 
 const ProductRate = styled.div`
-  color: #ed1250;
+  color: ${(props) => props.theme.colors.action};
   margin-left: -5px;
 `;
 
@@ -103,7 +106,7 @@ const ProductDescription = styled.span``;
 const ProductOriginalPrice = styled.div`
   color: #4f4f4f;
   text-decoration: line-through;
-  text-decoration-color: #ed1250;
+  text-decoration-color: ${(props) => props.theme.colors.action};
   margin-right: 24px;
   margin-top: 5px;
 `;
@@ -116,8 +119,8 @@ const ProductDiscountPrice = styled.div`
 const CartButton = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #ed1250;
-  color: #fff6da;
+  background-color: ${(props) => props.theme.colors.action};
+  color: ${(props) => props.theme.colors.secondary};
   padding-top: 8px;
   padding-bottom: 8px;
   border-radius: 20px;
@@ -137,7 +140,7 @@ const ProductPropertiesSectionFirst = styled.div`
   margin-top: 10px;
   width: 50%;
   padding-right: 10px;
-  border-right: 1px solid #fbc99d;
+  border-right: 1px solid ${(props) => props.theme.colors.alternative};
 `;
 const ProductPropertiesSectionSecond = styled.div`
   display: flex;
@@ -153,6 +156,12 @@ const ProductPropertiesTitle = styled.div`
 `;
 
 const ProductPropertiesText = styled.div``;
+
+const LoaderContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+`;
 
 const ProductDetail = () => {
   const [, dispatch] = useStateValue();
@@ -247,7 +256,9 @@ const ProductDetail = () => {
           </ProductSection>
         </ProductColumn>
       ) : (
-        <div></div>
+        <LoaderContainer>
+          <Loader type="ThreeDots" color="#042f4b" height="100" width="100" />
+        </LoaderContainer>
       )}
     </ProductWrapper>
   );

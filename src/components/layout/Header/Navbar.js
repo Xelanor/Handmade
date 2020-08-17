@@ -15,7 +15,7 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: #042f4b;
+  background-color: ${(props) => props.theme.colors.primary};
 `;
 
 const HeaderBlock = styled.div`
@@ -54,12 +54,16 @@ const HeaderSearchInput = styled.input`
   padding: 10px;
   border: none;
   width: 100%;
-  background-color: #fff6da;
+  background-color: ${(props) => props.theme.colors.secondary};
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   @media (max-width: 768px) {
     height: 12px;
     padding: 8px;
+  }
+
+  :focus {
+    outline: none;
   }
 `;
 
@@ -68,10 +72,12 @@ const SearchIconContainer = styled.div`
   align-items: center;
   padding: 5px;
   height: 28px !important;
-  background-color: #fff6da;
-  color: #ed1250;
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.action};
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  cursor: pointer;
+
   @media (max-width: 768px) {
     height: 18px !important;
   }
@@ -111,12 +117,12 @@ const MobileHeaderNavBlock = styled.div`
 const HeaderIconContainer = styled.div`
   display: flex;
   align-items: center;
-  color: #fff6da;
+  color: ${(props) => props.theme.colors.secondary};
   margin-right: 5px;
 `;
 
 const HeaderNavText = styled.span`
-  color: #fff6da;
+  color: ${(props) => props.theme.colors.secondary};
   font-size: 16px;
   font-weight: 400;
 `;
@@ -159,7 +165,7 @@ const StyledCloseIcon = styled(CloseIcon)`
 
 const MobileNavbarContainer = styled.div`
   display: ${(props) => (props.display ? "block" : "none")};
-  background-color: #042f4b;
+  background-color: ${(props) => props.theme.colors.primary};
   @media (min-width: 768px) {
     display: none;
   }

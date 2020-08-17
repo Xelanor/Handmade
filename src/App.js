@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { ThemeProvider } from "styled-components";
 
 import { useStateValue } from "./state/StateProvider";
 
@@ -39,14 +40,25 @@ function App() {
     }
   }, []);
 
+  const theme = {
+    colors: {
+      primary: "#042F4B",
+      secondary: "#FFF6DA",
+      alternative: "#FBC99D",
+      action: "#ED1250",
+    },
+  };
+
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route path="/urun/:slug" component={ProductDetail}></Route>
-        <Route path="/" component={Homepage}></Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/urun/:slug" component={ProductDetail}></Route>
+          <Route path="/" component={Homepage}></Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }
 

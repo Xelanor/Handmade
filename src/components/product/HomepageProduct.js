@@ -37,7 +37,7 @@ const ProductDesc = styled.div`
 `;
 
 const ProductTitle = styled.div`
-  color: #042f4b;
+  color: ${(props) => props.theme.colors.primary};
   font-weight: 600;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -46,13 +46,13 @@ const ProductTitle = styled.div`
   text-overflow: ellipsis;
 `;
 const ProductSeller = styled.div`
-  color: #fbc99d;
+  color: ${(props) => props.theme.colors.alternative};
   font-size: 12px;
 `;
 const ProductOriginalPrice = styled.div`
   color: #4f4f4f;
   text-decoration: line-through;
-  text-decoration-color: #ed1250;
+  text-decoration-color: ${(props) => props.theme.colors.action};
   margin-right: 16px;
 `;
 const ProductDiscountPrice = styled.div`
@@ -60,7 +60,7 @@ const ProductDiscountPrice = styled.div`
 `;
 
 const ProductRate = styled.div`
-  color: #ed1250;
+  color: ${(props) => props.theme.colors.action};
   margin-left: -5px;
 `;
 
