@@ -34,6 +34,19 @@ function reducer(state, action) {
 
       return { ...state, basket: [...state.basket, action.item.id] };
 
+    case "REMOVE_FROM_BASKET":
+      let newBasket = [...state.basket];
+      const index = state.basket.findIndex(
+        (basketItem) => basketItem === action.item.id
+      );
+
+      if (index >= 0) {
+        newBasket.splice(index, 1);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(newBasket));
+
+      return { ...state, basket: newBasket };
     default:
       return { ...state };
   }

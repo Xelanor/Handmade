@@ -60,7 +60,7 @@ const Homepage = () => {
         <ProductLine>
           {products ? (
             products.map((product) => {
-              return <HomepageProduct product={product} />;
+              return <HomepageProduct key={product._id} product={product} />;
             })
           ) : (
             <LoaderContainer>

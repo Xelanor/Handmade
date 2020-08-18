@@ -50,16 +50,18 @@ const HeaderSearchBox = styled.div`
 `;
 
 const HeaderSearchInput = styled.input`
-  height: 18px;
+  height: 28px;
   padding: 10px;
+  font-size: 14px;
   border: none;
   width: 100%;
   background-color: ${(props) => props.theme.colors.secondary};
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   @media (max-width: 768px) {
-    height: 12px;
+    height: 18px;
     padding: 8px;
+    font-size: 10px;
   }
 
   :focus {
@@ -203,12 +205,14 @@ const Navbar = (props) => {
                 <HeaderNavText>Giriş Yap</HeaderNavText>
               </HeaderNavBlock>
             </StyledLink>
-            <HeaderNavBlock>
-              <HeaderIconContainer>
-                <ShoppingBasketIcon style={{ fontSize: 30 }} />
-              </HeaderIconContainer>
-              <HeaderNavText>{basket.length}</HeaderNavText>
-            </HeaderNavBlock>
+            <StyledLink to="/sepetim">
+              <HeaderNavBlock>
+                <HeaderIconContainer>
+                  <ShoppingBasketIcon style={{ fontSize: 30 }} />
+                </HeaderIconContainer>
+                <HeaderNavText>{basket.length}</HeaderNavText>
+              </HeaderNavBlock>
+            </StyledLink>
           </HeaderNavContainer>
           <HeaderMobileNavContainer>
             <>

@@ -8,6 +8,7 @@ import { useStateValue } from "./state/StateProvider";
 import Header from "./components/layout/Header/Header";
 import Homepage from "./components/pages/homepage/Homepage";
 import ProductDetail from "./containers/product/ProductDetail";
+import CheckoutPage from "./components/pages/checkout/CheckoutPage";
 
 function App() {
   const [, dispatch] = useStateValue();
@@ -54,6 +55,7 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route path="/sepetim" component={CheckoutPage}></Route>
           <Route path="/urun/:slug" component={ProductDetail}></Route>
           <Route path="/" component={Homepage}></Route>
         </Switch>

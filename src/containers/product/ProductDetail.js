@@ -201,6 +201,7 @@ const ProductDetail = () => {
               <ProductThumbImageSection>
                 {product.images.map((image) => (
                   <ProductThumbImage
+                    key={image}
                     active={activeImage === image}
                     onClick={(_) => setActiveImage(image)}
                     src={image}
