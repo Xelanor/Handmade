@@ -49,25 +49,61 @@ const LoaderContainer = styled.div`
 const CheckoutPage = () => {
   const [{ basket }, dispatch] = useStateValue();
   const [products, setProducts] = useState();
+  const [basketTotal, setBasketTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (basket.length > 0) {
+    setLoading(true);
+    let basketItems = Object.keys(basket);
+    if (basketItems.length > 0) {
       axios
-        .post("/api/products/checkout", { products: basket })
+        .post("/api/products/checkout", { products: basketItems })
         .then((res) => {
+          let basketValue = 0;
           setProducts(res.data);
+          res.data.map((product) => {
+            return (basketValue += product.discountPrice * basket[product._id]);
+          });
+          setBasketTotal(basketValue.toFixed(2));
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
       setProducts([]);
+      setBasketTotal(0);
+      setLoading(false);
     }
   }, [basket]);
 
   const removeFromBasket = (id) => {
+    let newProducts = [...products];
+    newProducts = newProducts.filter((product) => {
+      return product._id !== id;
+    });
+    setProducts(newProducts);
+
     dispatch({
       type: "REMOVE_FROM_BASKET",
+      item: {
+        id,
+      },
+    });
+  };
+
+  const incrementProduct = (id) => {
+    dispatch({
+      type: "INCREMENT_PRODUCT",
+      item: {
+        id,
+      },
+    });
+  };
+
+  const decrementProduct = (id) => {
+    dispatch({
+      type: "DECREMENT_PRODUCT",
       item: {
         id,
       },
@@ -85,7 +121,10 @@ const CheckoutPage = () => {
               return (
                 <Product
                   key={product._id}
+                  amount={basket[product._id]}
                   product={product}
+                  increment={incrementProduct}
+                  decrement={decrementProduct}
                   remove={removeFromBasket}
                 />
               );
@@ -98,8 +137,15 @@ const CheckoutPage = () => {
         )}
       </ProductsContainer>
       <SummaryContainer>
-        <CheckoutSummary />
+        <CheckoutSummary total={basketTotal} />
       </SummaryContainer>
+      {loading ? (
+        <LoaderContainer>
+          <Loader type="ThreeDots" color="#042f4b" height="100" width="100" />
+        </LoaderContainer>
+      ) : (
+        <div></div>
+      )}
     </Container>
   );
 };

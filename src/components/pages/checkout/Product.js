@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -87,7 +90,7 @@ const StyledTitleText = styled.div`
 
 const StyledText = styled.div`
   color: ${(props) => props.theme.colors.primary};
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
 `;
 
@@ -119,23 +122,35 @@ const IconWrapper = styled.div`
   border-bottom-right-radius: 5px;
 `;
 
-const Product = ({ product, remove }) => {
+const Product = ({ amount, product, remove, increment, decrement }) => {
   return (
     <Container>
-      <div className="flex">
-        <ProductImage src={product.images[0]} />
-        <ProductDetail>
-          <ProductName>{product.name}</ProductName>
-          <ProductSeller>Satıcı: Esra Yıldız</ProductSeller>
-          <ProductDescription>{product.description}</ProductDescription>
-        </ProductDetail>
-      </div>
+      <Link to={`/urun/${product.slug}`}>
+        <div className="flex">
+          <ProductImage src={product.images[0]} />
+          <ProductDetail>
+            <ProductName>{product.name}</ProductName>
+            <ProductSeller>Satıcı: Esra Yıldız</ProductSeller>
+            <ProductDescription>{product.description}</ProductDescription>
+          </ProductDetail>
+        </div>
+      </Link>
       <div className="flex justify-center">
         <ActionsWrapper>
           <NumbersWrapper>
             <ColumnWrapperFirst>
               <StyledTitleText>ADET</StyledTitleText>
-              <StyledText>1</StyledText>
+              <div className="flex items-center">
+                <RemoveIcon
+                  onClick={() => decrement(product._id)}
+                  className="bg-hand3 cursor-pointer"
+                />
+                <StyledText className="bg-white px-2">{amount}</StyledText>
+                <AddIcon
+                  onClick={() => increment(product._id)}
+                  className="bg-hand3 cursor-pointer"
+                />
+              </div>
             </ColumnWrapperFirst>
             <ColumnWrapperSecond>
               <StyledTitleText>FİYAT</StyledTitleText>

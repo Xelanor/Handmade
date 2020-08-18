@@ -177,6 +177,12 @@ const Navbar = (props) => {
   const [{ basket }] = useStateValue();
   const [mobileMenu, setMobileMenu] = useState(false);
 
+  const getTotalBasketAmount = () => {
+    let amount = 0;
+    Object.values(basket).map((value) => (amount += value));
+    return amount;
+  };
+
   return (
     <>
       <HeaderContainer>
@@ -210,7 +216,7 @@ const Navbar = (props) => {
                 <HeaderIconContainer>
                   <ShoppingBasketIcon style={{ fontSize: 30 }} />
                 </HeaderIconContainer>
-                <HeaderNavText>{basket.length}</HeaderNavText>
+                <HeaderNavText>{getTotalBasketAmount()}</HeaderNavText>
               </HeaderNavBlock>
             </StyledLink>
           </HeaderNavContainer>
